@@ -1,0 +1,257 @@
+\documentclass[12pt]{amsbook}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\@part{\protect\enspace\protect\noindent}{\hspace{.5em}}{}{\ERROR}
+\makeatother
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage[numbers]{natbib}
+\usepackage[english]{babel}
+\usepackage[X2,T1]{fontenc}
+\usepackage{leftindex}
+\usepackage{libertine}%new font
+\usepackage{libertinust1math}
+\usepackage[utf8]{inputenc} %'utf8' instead of 'latin1'
+\usepackage{enumitem} 
+\usepackage{tikz-cd}
+\usepackage{hyperref}
+\usepackage{stmaryrd}
+\allowdisplaybreaks
+\usepackage{quiver}
+\usepackage{appendix}
+\usepackage{mathtools}
+
+
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Open Question}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{qquestion}[theorem]{Question}
+\newtheorem{axiom}{Axiom}
+
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\T}{\mbb T}
+\newcommand{\I}{\mbb I}
+\newcommand{\gn}[1]{\ulcorner\! #1 \!\urcorner}
+\newcommand{\mr}[1]{\mathrm{#1}}
+\newcommand{\mf}[1]{\mathfrak{#1}}
+\newcommand{\ms}[1]{\mathsf{#1}}
+\newcommand{\Ind}{\mathbf{Ind}}
+\newcommand{\Pro}{\mathbf{Pro}}
+\newcommand{\Set}{\mb{Set}}
+\newcommand{\Prop}{\mb{Prop}}
+\newcommand{\sSet}{\mb{sSet}}
+\newcommand{\sSeto}{\mb{sSet}_{\le 1}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Fin}{\mb{Fin}}
+\newcommand{\Cnt}{\mb{Cnt}}
+\newcommand{\Enm}{\mb{Enm}}
+\newcommand{\Grp}{\mb{Grp}}
+\newcommand{\sub}{\mr{Sub}}
+\newcommand{\Lex}{\mb{Lex}}
+\newcommand{\Pos}{\mb{Pos}}
+\newcommand{\alg}{\text{-}\mb{Alg}}
+\newcommand{\Var}{\mb{Var}}
+\newcommand{\Aff}{\mb{Aff}}
+\newcommand{\Vect}{\mb{Vect}}
+\newcommand{\CRing}{\mb{CRing}}
+\newcommand{\DL}{\mb{DL}}
+\newcommand{\BA}{\mb{BA}}
+\newcommand{\HA}{\mb{HA}}
+\newcommand{\JL}{\mb{JL}}
+\newcommand{\ML}{\mb{ML}}
+\newcommand{\ProMon}{\mb{ProMod}}
+\newcommand{\CTopoi}{\mb{CTopoi}}
+\newcommand{\PTc}{\mb{PT}_c}
+\newcommand{\Topoi}{\mb{Topoi}}
+\newcommand{\sh}{\mb{Sh}}
+\newcommand{\psh}{\mb{Psh}}
+\newcommand{\Cont}{\mb{Cont}}
+\newcommand{\Cart}[1]{#1^\to_{\text{cart}}}
+\newcommand{\Str}{\mb{Str}}
+\newcommand{\op}{^{\mathrm{op}}}
+\newcommand{\inv}{^{\mathrm{-1}}}
+\newcommand{\pf}[1]{\widehat{#1}}
+\newcommand{\qsi}[1]{\tilde{#1}}
+\newcommand{\cob}{\vartriangleleft}
+\newcommand{\other}{\mathrm{otherwise}}
+\newcommand{\geo}[1]{\left|#1\right|}
+\newcommand{\ov}[1]{\overline{#1}}
+\newcommand{\set}[1]{\{\,#1\,\}}
+\newcommand{\eff}{\Leftrightarrow}
+\newcommand{\conjt}{\;\&\;}
+\newcommand{\pair}[1]{\left\langle#1\right\rangle}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\ev}{\mathrm{ev}}
+\newcommand{\elem}{\int\!\!}
+\newcommand{\nt}{\Rightarrow}
+\newcommand{\scomp}[2]{\{\,#1\mid#2\,\}}
+\newcommand{\yon}{\mathtt{y}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\rightarrowtail}
+\newcommand{\hook}{\hookrightarrow}
+\newcommand{\cg}{\operatorname{\sim}}
+\newcommand{\im}{\operatorname{img}}
+\newcommand{\cgf}[2]{\leftindex_{#1}{\cg}_{#2}}
+\newcommand{\coten}{\pitchfork}
+\newcommand{\ppr}{\operatorname{\hat\times}}
+\newcommand{\rl}{^{\perp}}
+\newcommand{\llo}[1]{\leftindex_{}^{\perp} {#1}}
+\newcommand{\dl}{^{\circ}}
+\newcommand{\prth}[1]{\left(#1\right)}
+\newcommand{\fn}{_{\mr{f.}}}
+\newcommand{\fp}{_{\mr{f.p.}}}
+\newcommand{\fpp}{_{\mr{f.p.,+}}}
+\newcommand{\cp}{_{\mr{c.p.}}}
+\newcommand{\cpp}{_{\mr{c.p.,+}}}
+\newcommand{\pls}{^+}
+\newcommand{\mns}{^-}
+\newcommand{\dv}{\operatorname{\uparrow}}
+\newcommand{\cv}{\operatorname{\downarrow}}
+\newcommand{\et}{_{\text{\'et}}}
+\newcommand{\N}{\mbb N}
+\newcommand{\Q}{\mbb Q}
+\newcommand{\Z}{\mbb Z}
+\newcommand{\Deltao}{\Delta_{\le 1}}
+\newcommand{\Deltaw}{\Delta_{\omega}}
+\newcommand{\sk}{\ms{sk}}
+\newcommand{\csk}{\ms{csk}}
+\newcommand{\sInt}{\mb{sInt}}
+\newcommand{\jcan}{J_{\mr{can}}}
+\newcommand{\wCPO}{\omega\mb{CPO}}
+\newcommand{\shape}{\operatorname{\smallint}}
+\newcommand{\dneg}{\neg\neg}
+\newcommand{\prt}{_{\bot}}
+\newcommand{\fa}[2]{\forall #1\!\colon\!\!#2.\ }
+\newcommand{\ex}[2]{\exists #1\!\colon\!\!#2.\ }
+\newcommand{\exu}[2]{\exists_! #1\!\colon\!\!#2.\ }
+\newcommand{\ld}[2]{\lambda #1\!\colon\!\!#2.\ }
+\newcommand{\subopen}{\subseteq_{\mbb I}}
+\newcommand{\emp}{\emptyset}
+\newcommand{\eq}{\leftrightarrow}
+\newcommand{\ass}[1]{\llbracket#1\rrbracket} %\usepackage{stmaryrd}
+\newcommand{\pss}[1]{||#1||} %\usepackage{stmaryrd}
+\newcommand{\tp}{\ms{Type}}
+\newcommand{\pp}{\ms{Prop}}
+\newcommand{\st}{\ms{Set}}
+\newcommand{\cnt}{\ms{Cnt}}
+\newcommand{\gp}{\ms{Grpd}}
+\newcommand{\pcat}{\ms{PCat}}
+\newcommand{\cat}{\ms{Cat}}
+\newcommand{\pcatt}{\ms{PCAT}}
+\newcommand{\catt}{\ms{CAT}}
+\newcommand{\PCat}{\mb{PCat}}
+\newcommand{\Cat}{\mb{Cat}}
+\newcommand{\PCAT}{\mb{PCAT}}
+\newcommand{\CAT}{\mb{CAT}}
+\newcommand{\Catt}{\mf{Cat}}
+\newcommand{\CATT}{\mf{CAT}}
+\newcommand{\Top}{\mf{Top}}
+\newcommand{\Tp}{\ms{TYPE}}
+\newcommand{\Pp}{\ms{PROP}}
+\newcommand{\St}{\ms{SET}}
+\newcommand{\Gp}{\ms{GRPD}}
+\newcommand{\fst}{\ms{Fin}}
+\newcommand{\quot}[1]{/_{\pair{#1}}}
+\newcommand{\List}{\ms{List}}
+\newcommand{\hp}{\text{-}}
+\newcommand{\PG}{\ms{PG}}
+\newcommand{\uv}[1]{\underline{#1}}
+\newcommand{\mmod}[1]{#1\text{-}\mathbf{Mod}}
+\newcommand{\func}{\mb{Func}}
+\newcommand{\tm}[1]{#1\text{-}\mathrm{Term}}
+\newcommand{\eqn}[1]{#1\text{-}\mathrm{Eqn}}
+\newcommand{\horn}[1]{#1\text{-}\mathrm{Horn}}
+\newcommand{\gr}[2]{[#1|#2]}
+\newcommand{\VT}{\mbb V_\T}
+\newcommand{\spec}{\operatorname{Spec}}
+\newcommand{\El}{\mr{El}}
+\newcommand{\lan}{\ms{lan}}
+\newcommand{\ran}{\ms{ran}}
+\newcommand{\upp}{_{\ms U}}
+\newcommand{\dsg}[1]{\!\pair{#1}}
+
+\newcommand{\um}[1]{U_{#1}}
+\newcommand{\ut}[1]{\mbb U_{#1}}
+\newcommand{\prev}{\triangleleft}
+\newcommand{\latt}{\triangleright}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\Diag}{\mb{Diag}}
+
+\DeclareFontFamily{U}{min}{}
+\DeclareFontShape{U}{min}{m}{n}{ <-> udmj30 }{}
+\DeclareRobustCommand{\yon}{\text{\usefont{U}{min}{m}{n}\symbol{'207}}\!}
+\DeclareRobustCommand{\noy}{\text{\usefont{U}{min}{m}{n}\symbol{'347}}\!}
+
+\makeatletter
+\newcommand{\ct@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font lim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\ct}{%
+  \mathop{\mathpalette\ct@{\rightarrowfill@\textstyle}}\nmlimits@
+}
+\makeatother
+\makeatletter
+\newcommand{\lt@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font lim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\lt}{%
+  \mathop{\mathpalette\lt@{\leftarrowfill@\textstyle}}\nmlimits@
+}
+\makeatother
+
+
+\title{Classifying topoi and domain theory}
+\author{Lingyuan Ye}
+\date{\today}
+
+
+
+\begin{document}
+%
+
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+
+%
+% \Endhorrunning{L. Ye}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+% \institute{New College\\
+
+%
+\maketitle              % typeset the header of the contribution
+%
+\tableofcontents
+
+\include{source/prelim}
+
+
+\end{document}
+
+
