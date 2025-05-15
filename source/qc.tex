@@ -1,5 +1,271 @@
 \chapter{General quasi-coherence}
 
-\section{The pro-monoid of a category}
+\section{The enriched endo profunctors}
 
-Let $\mc C$ be a category. 
+Let $\mc C$ be a category. We write $\epro{\mc C}$ as the category of endo profunctors on $\mc C$. We adopt the convention that subscripts will be \emph{covariant}, and superscripts will be \emph{contravariant}. This way, for the profunctor $\yon$, $\yon_c$ will be $\mc C(-,c)$, and $\yon^c$ will be $\mc C(c,-)$. 
+
+One way to view $\epro{\mc C}$ is the functor category $[\mc C,\psh(\mc C)]$, which we also denote as $\diag_{\mc C}$. This notation mainly signifies that we are integrating along the covariant variable,
+\[ \diag_{\mc C}(F,G) \cong \int_{c\in\mc C}\psh(\mc C)(F_c,G_c). \]
+
+Now a diagram equivalently can be viewed as an internal diagram for the constant internal category $\Delta\mc C$ in $\psh(\mc C)$. We organise this internal perspective into a \emph{$\psh(\mc C)$-enriched} category $\Diag_{\mc C}$ of internal diagrams over $\Delta\mc C$. Given two diagrams $F,G : \mc C \to \psh(\mc C)$, we define
+\[ \Diag_{\mc C}(F,G) := \int_{c\in\mc C}G_c^{F_c}. \]
+In other words, for any $d\in\mc C$ we have 
+\begin{align*}
+  \Diag_{\mc C}(F,G)^d
+  &\cong \psh(\mc C)(\yon_d,\int_{c\in\mc C}G_c^{F_c}) \\ 
+  &\cong \int_{c\in\mc C}\psh(\mc C)(F_c,G_c^{\yon_d}) \\
+  &\cong \diag_{\mc C}(F,G^{\yon_d})
+\end{align*}
+Here $G^{\yon_d}$ is the constant power of the diagram $G$, i.e. $(G^{\yon_d})_c \cong G_c^{\yon_d}$. In this case, the underlying category of $\Diag_{\mc C}$ is $\diag_{\mc C}$ itself,
+\[ \geo{\Diag_{\mc C}} \simeq \diag_{\mc C} \simeq \epro{\mc C}. \]
+
+\begin{proposition}
+  $\Diag_{\mc C}$ is both tensored and powered over $\psh(\mc C)$.
+\end{proposition}
+\begin{proof}
+  For any $X\in\psh(\mc C)$, we define $X \times F$ to be the constant tensor,
+  \[ (X \times F)_c \cong X \times F_c. \]
+  This way, we have
+  \begin{align*}
+    \Diag_{\mc C}(X \times F,G)
+    &\cong \int_{c\in\mc C}G_c^{X \times F_c} \\
+    &\cong \int_{c\in\mc C}(G_c^{F_c})^X \\
+    &\cong \prth{\int_{c\in\mc C}G_c^{F_c}}^X \\
+    &\cong \Diag_{\mc C}(F,G)^X
+  \end{align*}
+  The third equivalence has used the fact that $(-)^X$ is a right adjoint, hence preserves end. Completely similarly, we may define the power $G^X$ to be the constant power, 
+  \[ (G^X)_c \cong G_c^X. \]
+  This way, again we have
+  \[ \Diag_{\mc C}(F,G^X) \cong \int_{c\in\mc C}(G_c^X)^{F_c} \cong \prth{\int_{c\in\mc C}G_c^{F_c}}^X \cong \Diag_{\mc C}(F,G)^X. \]
+  This shows $\Diag_{\mc C}$ is both tensored and powered by $\psh(\mc C)$.
+\end{proof}
+
+
+\section{The internal theory of flat functors}
+
+Let $\mbb C$ denote the theory of flat functors on $\mc C$. We know that
+\[ \mmod{\mbb C} \simeq \mb{Flat}(\mc C,\Set) \simeq \mb{Ind}(\mc C\op). \]
+We know $\psh(\mc C)$ is the classifying topos of $\mbb C$. There are interesting structures in the category of $\mbb C$-models in $\psh(\mc C)$,
+\[ \mmod{\mbb C}(\psh(\mc C)) \simeq \mb{Flat}(\mc C,\psh(\mc C)) \simeq [\mc C\op,\mmod{\mbb C}] \subseteq \epro{\mc C}, \]
+which is a full subcategory of the endo profunctors on $\mc C$. We will write the full subcategory $\fla(\mc C,\psh(\mc C))$ of $\diag_{\mc C}$ as $\fla_{\mc C}$. The flatness condition is a condition on the covariant entry for an endo profunctor.
+
+\begin{example}
+  There is a generic $\mbb C$-model in $\fla_{\mc C}$, since $\psh(\mc C)$ is the classifying topos of $\mbb C$. This is nothing but the Yoneda embedding,
+  \[ \yon : \mc C \to \psh(\mc C). \]
+\end{example}
+
+We have constructed a $\psh(\mc C)$-enriched category $\Diag_{\mc C}$ with the underlying category $\diag_{\mc C}$. With $\fla_{\mc C}$ as a full subcategory, it will also be the underlying category of a full enriched subcategory of $\Diag_{\mc C}$, which we denote as $\Flat_{\mc C}$. 
+
+\begin{proposition}\label{flathaspower}
+  $\Flat_{\mc C}$ inherits the power of $\psh(\mc C)$ over $\Diag_{\mc C}$.
+\end{proposition}
+\begin{proof}
+  Since the power $F^X$ is pointwise on the covariant entry, i.e. $(F^X)_c \cong F_c^X$, and it will be flat if $F$ is, since $(-)^X$ preserves limits.
+\end{proof}
+
+The more interesting enriched category is the coslice $\yon/\Flat_{\mc C}$, whose objects are flat diagrams $F$ with a map $\yon \to F$. The enriched hom in $\yon/\Flat_{\mc C}$ for two flat diagrams $F,G$ with $f : \yon \to F$ and $g : \yon \to G$ is given by the pullback
+\[
+\begin{tikzcd}
+  \yon/\Flat_{\mc C}(F,G) \ar[r] \ar[d] \ar[dr, pullback] & \Flat_{\mc C}(F,G) \ar[d, "{\Flat_{\mc C}(f,G)}"] \\ 
+  1 \ar[r, "g"'] & \Flat_{\mc C}(\yon,G)
+\end{tikzcd}
+\]
+
+In fact, the coslice $\yon/\Flat_{\mc C}$ is the enriched category of models of an internal theory $\ut{\mbb C}$ of \emph{$\yon$-algebra}, and henceforth we will write it as $\mmod{\ut{\mbb C}}$. By construction we have 
+\[ \geo{\mmod{\ut{\mbb C}}} \simeq \yon/\fla_{\mc C}. \]
+
+\begin{proposition}\label{uthaspower}
+  The enriched forgetful functor $\mmod{\ut{\mbb C}} \to \Flat_{\mc C}$ creates power by $\psh(\mc C)$.
+\end{proposition}
+\begin{proof}
+  Suppose we have two $\ut{\mbb C}$-models $F,G$ and $X\in\psh(\mc C)$. From \Cref{flathaspower} we know $G^X$ is again flat, and admits a canonical $\yon$-algebra structure via the constant map $G \to G^X$. This way, since $(-)^X$ preserves limits, we have
+  \begin{align*}
+    \mmod{\ut{\mbb C}}(F,G)^X 
+    &\cong (1 \times_{\Flat_{\mc C}(\yon,G)}\Flat_{\mc C}(F,G))^X \\ 
+    &\cong 1 \times_{\Flat_{\mc C}(\yon,G)^X}\Flat_{\mc C}(F,G)^X \\ 
+    &\cong 1 \times_{\Flat_{\mc C}(\yon,G^X)}\Flat_{\mc C}(F,G^X) \\
+    &\cong \mmod{\ut{\mbb C}}(F,G^X)
+  \end{align*}
+  Hence, $G^X$ is again the power in $\mmod{\ut{\mbb C}}$.
+\end{proof}
+
+\section{Quasi-coherence for left exact categories}
+
+Let us now assume $\mc C$ is a left exact category. Then for any topos $\mc E$, we know
+\[ \mb{Flat}(\mc C,\mc E) \simeq \Lex(\mc C,\mc E). \]
+In particular, $\mmod{\mbb C} \simeq \Lex(\mc C,\Set)$. Furthermore, it is well-known that in this case, $\mmod{\mbb C}$ is locally finitely presentable, thus in particular complete and cocomplete.
+
+\begin{lemma}\label{genpresfincolimi}
+  The generic model $\yon$ as a functor 
+  \[ \yon^- : \mc C\op \to \mmod{\mbb C} \]
+  takes finite limits in $\mc C$ to finite colimits in $\mmod{\mbb C}$.
+\end{lemma}
+\begin{proof}
+  Suppose we have a finite limit $c \cong \lt_{i\in I}c_i$ in $\mc C$. For any flat functor $F\in\mmod{\mbb C}$, by Yoneda
+  \begin{align*}
+    \mmod{\mbb C}(\yon^{c},F)
+    &\cong F(c) \\
+    &\cong \lt_{i\in I}F(c_i) \\ 
+    &\cong \lt_{i\in I}\mmod{\mbb C}(\yon^{c_i},F) \\ 
+    &\cong \mmod{\mbb C}(\ct_{i\in I}\yon^{c_i},F)
+  \end{align*}
+  Hence, $\yon^c \cong \ct_{i\in I}\yon^{c_i}$ in $\mmod{\mbb C}$.
+\end{proof}
+
+Furthermore, we construct a functor 
+\[ \qsi - : \mmod{\mbb C} \to \yon/\fla_{\mc C}, \]
+sending each flat functor $F$ to the $\yon$-algebra
+\[ \qsi{F} := \yon \sqcup \Delta F. \]
+Here $\Delta F : \mc C\op \to \mmod{\mbb C}$ is the constant functor on $F$, and $\sqcup$ is the coproduct in $[\mc C\op,\mmod{\mbb C}]$, which is induced by the pointwise coproduct $\sqcup$ in $\mmod{\mbb C}$. In other words, for any $c\in\mc C$,
+\[ \qsi F^c \cong \yon^c \sqcup F. \]
+
+\begin{proposition}
+  There is a reflective adjunction
+  \[ \qsi- \dashv (-)^1 : \mmod{\mbb C} \to \yon/\fla_{\mc C}, \]
+\end{proposition}
+\begin{proof}
+  For any $F\in\mmod{\mbb C}$ and $G \in \yon/\fla_{\mc C}$, we have 
+  \begin{align*}
+    \yon/\fla_{\mc C}(\qsi F,G)
+    &\cong \yon/\fla_{\mc C}(\yon \sqcup \Delta F,G) \\
+    &\cong [\mc C\op,\mmod{\mbb C}](\Delta F,G) \\ 
+    &\cong \int_{c\in\mc C}\mmod{\mbb C}(F,G^c) \\ 
+    &\cong \mmod{\mbb C}(F,G^1)
+  \end{align*}
+  The adjunction is reflective, since for any $F\in\mmod{\mbb C}$, by construction $\qsi F^1 \cong \yon^1 \sqcup F \cong F$, since by \Cref{genpresfincolimi} $\yon^1$ is initial in $\mmod{\mbb C}$.
+\end{proof}
+
+\begin{definition}
+  For any $\ut{\mbb C}$-model $G$ in $\psh(\mc C)$, we define its \emph{spectrum} as the enriched hom
+  \[ \spec G := \mmod{\ut{\mbb C}}(G,\yon). \]
+  This gives us an enriched functor 
+  \[ \spec : \mmod{\ut{\mbb C}} \to \psh(\mc C). \]
+\end{definition}
+
+\begin{lemma}
+  For any $c\in\mc C$, we have 
+  \[ \spec\qsi{\yon^c} \cong \yon_c. \]
+\end{lemma}
+\begin{proof}
+  For any $d\in\mc C$, we have the following natural isomorphisms,
+  \begin{align*}
+    (\spec\qsi{\yon^c})^d
+    &\cong \psh(\mc C)(\yon_d,\mmod{\ut{\mbb C}}(\qsi{\yon^c},\yon)) \\ 
+    &\cong \yon/\fla_{\mc C}(\qsi{\yon^c},\yon^{\yon_d}) \\
+    &\cong \mmod{\mbb C}(\yon^c,(\yon^{\yon_d})^1) \\
+    &\cong (\yon_c^{\yon_d})^1 \\ 
+    &\cong \yon^d_c
+  \end{align*}
+  It follows that $\spec\qsi{\yon^c} \cong \yon_c$.
+\end{proof}
+
+\begin{proposition}
+  There is an enriched adjunction 
+  \[\begin{tikzcd}
+    {\mmod{\ut{\mbb C}}\op} & \psh(\mc C)
+    \arrow[""{name=0, anchor=center, inner sep=0}, "\spec"', curve={height=18pt}, from=1-1, to=1-2]
+    \arrow[""{name=1, anchor=center, inner sep=0}, "\rg"', curve={height=18pt}, from=1-2, to=1-1]
+    \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=1, to=0]
+  \end{tikzcd}\]
+  where $\rg$ sends $X\in\psh(\mc C)$ to the algebra $\rg X \cong \yon^X$.
+\end{proposition}
+\begin{proof}
+  For any $F\in\mmod{\ut{\mbb C}}$ and $X\in\psh(\mc C)$, we have 
+  \[ \spec F^X \cong \mmod{\ut{\mbb C}}(F,\yon)^X \cong \mmod{\ut{\mbb C}}(F,\yon^X), \]
+  where the last step holds by \Cref{uthaspower}.
+\end{proof}
+
+\begin{definition}
+  We call $F\in\mmod{\ut{\mbb C}}$ \emph{quasi-coherent}, if the counit $F \to \rg\spec F$ is an isomorphism in $\mmod{\ut{\mbb C}}$. Similarly, we say $X\in\psh(\mc C)$ is \emph{affine}, if the unit $X \to \spec\rg X$ is an isomorphism in $\psh(\mc C)$.
+\end{definition}
+
+\begin{proposition}
+  For any $c\in\mc C$, $\qsi{\yon^c}$ is quasi-coherent, i.e. $\yon_c$ is affine.
+\end{proposition}
+\begin{proof}
+  For any $d\in\mc C$, by \Cref{genpresfincolimi} we have 
+  \[ (\qsi{\yon^c})^d \cong \yon^c \sqcup \yon^d \cong \yon^{c \times d}. \]
+  On the other hand, for the power $\yon^{\yon_c}$ we have
+  \[ (\yon^{\yon_c})^d \cong \psh(\mc C)(\yon_d,\yon^{\yon_c}) \cong \psh(\mc C)(\yon_{c \times d},\yon) \cong \yon^{c \times d}. \]
+  Hence, we have the above equivalence.
+\end{proof}
+
+\section{Quasi-coherent diagrams}
+
+To characterise quasi-coherent algebras in $\mmod{\ut{\mbb C}}$, let us look at the concrete description of the counit $F \to \rg\spec F$ for some $\yon$-algebra $F$. We start by giving a more concrete description of the $\yon$-algebra structure on a diagram:
+
+\begin{lemma}
+  For any $F \in \diag_{\mc C}$, morphisms from $\yon$ is given by the end
+  \[ \diag_{\mc C}(\yon,F) \cong \int_{c\in\mc C}F^c_c. \]
+\end{lemma}
+\begin{proof}
+  By construction,
+  \[ \diag_{\mc C}(\yon,F) \cong \int_{c\in\mc C}\psh(\mc C)(\yon_c,F_c) \cong \int_{c\in\mc C}F^c_c. \qedhere \]
+\end{proof}
+
+Hence, an $\yon$-algebra structure $t : \yon \to F$ is equivalently an element $t$ in the end $\int_{c\in\mc C}F^c_c$, i.e. a family of elements $t(c) \in F^c_c$ such that for any $f : c \to d$ in $\mc C$,
+\[ F_f^d(t(c)) = F^f_c(t(d)). \]
+
+\begin{example}
+  Interestingly, we have the computation that 
+  \[ \diag_{\mc C}(\yon,\yon) \cong \int_{c\in\mc C}\yon_c^c \cong \int_{c\in\mc C}\mc C(c,c). \]
+  When $\mc C$ is a one-object category, i.e. a monoid, this is exactly the \emph{centre}, i.e. an element in it is one that commutes with all other elements. More generally for $t \in \int_{c\in\mc C}\mc C(c,c)$, $t(c)$ must lie in the centre of the endomorphism monoid $\mc C(c,c)$.
+\end{example}
+
+\begin{lemma}
+  For any $(F,t)\in\yon/\fla_{\mc C}$ and $c\in\mc C$, we have
+  \[ (\spec F)^c \cong  \]
+\end{lemma}
+\begin{proof}
+  By construction, we know that 
+  \[ (\spec F)^c \cong \yon/\fla_{\mc C}(F,\yon^{\yon_c}). \]
+  On one hand, we know that
+  \begin{align*}
+    \fla_{\mc C}(F,\yon^{\yon_c}) 
+    &\cong \int_{d\in\mc C}\psh(\mc C)(F_d,\yon_d^{\yon_c}) \\ 
+    &\cong 
+  \end{align*}
+\end{proof}
+\begin{proof}
+  By definition, we directly compute for $c,d\in\mc C$ that 
+  \begin{align*}
+    (\yon^{\spec F})_c^d
+    &\cong (\yon_c^{\spec F})^d \\ 
+    &\cong \psh(\mc C)(\yon_d \times \spec F,\yon_c) \\ 
+    &\cong \int_{e\in\mc C}\Set(\yon_d^e \times (\spec F)^e,\yon^e_c) \\ 
+  \end{align*}
+  \begin{align*}
+    \Diag_{\mc C}(F,\yon)^c 
+    &\cong \psh(\mc C)(\yon_c,\int_{d\in\mc C}\yon_d^{F_d}) \\
+    &\cong \int_{d\in\mc C}\psh(\mc C)(F_d \times \yon_c,\yon_d) \\
+    &\cong \int_{d,e\in\mc C}\Set(F^e_d \times \yon^e_c,\yon^e_d) \\ 
+    &\cong \int_{d\in\mc C}\Set(F^c_d,\yon^c_d)
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  For $(F,t)\in\yon/\fla_{\mc C}$, we have 
+  \[ \spec F \]
+\end{lemma}
+\begin{proof}
+  We first compute $\Flat_{\mc C}(F,\yon)$, 
+  \begin{align*}
+    \Flat_{\mc C}(F,\yon) 
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  For any $F\in\mmod{\ut{\mbb C}}$, $F$ is quasi-coherent iff 
+\end{proposition}
+\begin{proof}
+  By construction, for any $c,d\in\mc C$ we have 
+  \begin{align*}
+    (\yon^{\spec F})_c^d 
+    &\cong \yon_c^{\spec F}(d) \\ 
+    &\cong \psh(\mc C)(\yon_d \times \spec F,\yon_c)
+  \end{align*}
+  On the other hand,
+\end{proof}
+
+
+

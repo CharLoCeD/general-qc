@@ -1,0 +1,158 @@
+\chapter{Modality in classifying topoi}
+
+\section{Modality from models}
+
+For any diagram $F \in \diag_{\mc C}$, it induces an adjoint pair
+\[\begin{tikzcd}
+	{\psh(\mc C)} & {\psh(\mc C)}
+	\arrow[""{name=0, anchor=center, inner sep=0}, "{\latt F}"', curve={height=12pt}, from=1-1, to=1-2]
+	\arrow[""{name=1, anchor=center, inner sep=0}, "{\prev F}"', curve={height=12pt}, from=1-2, to=1-1]
+	\arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=1, to=0]
+\end{tikzcd}\]
+where $\prev F$ is given by left Kan extension,
+\[ \prev FX \cong \int^{c\in\mc C} X^c \times F_c, \]
+and the right adjoint $\latt F$ is given by 
+\[ \latt FX \cong \psh(\mc C)(F,X) \cong \int_{d\in\mc C}\Set(F^d,X^d). \]
+In fact, we get an equivalence. Let us use $\radj_{\mc C}$ to denote the category of right adjoints from $\psh(\mc C)$ to itself, and similarly $\ladj_{\mc C}$ for the dual category. 
+
+\begin{proposition}
+  There is an equivalence of categories
+  \[ \prev - : \diag_{\mc C} \simeq \ladj_{\mc C}, \]
+  Equivalently, we have 
+  \[ \latt - : \diag_{\mc C} \simeq \radj_{\mc C}\op. \]
+\end{proposition}
+\begin{proof}
+  We construct the inverse: For a left adjoint $A : \psh(\mc C) \to \psh(\mc C)$ we send it to the diagram
+  \[ A\yon : \mc C \to \psh(\mc C). \]
+  This way, for any diagram $F$ and any left adjoint $A$, we have 
+  \[ \ladj_{\mc C}(\prev F,A) \cong \diag_{\mc C}(F,A\yon), \]
+  because $\prev F$ is the left Kan extension. Hence, we have an adjunction. Furthermore, since $\yon$ is fully faithful, for any diagram $F$, $\prev F \circ \yon \cong F$. Also, since $\psh(\mc C)$ is the free cocompletion of $\mc C$, $\prev {A\yon} \cong A$. This shows the above is an equivalence.
+\end{proof}
+
+\begin{example}
+  For the diagram $\yon\in\diag_{\mc C}$, we have $\prev {\yon} \cong \id$ and $\latt {\yon} \cong \id$.
+\end{example}
+
+\begin{definition}
+  A \emph{pointer} for a diagram $F$ is a map $\sigma : F \to \yon$ in $\diag_{\mc C}$. Equivalently, this is a natural transformation $\eta : \id \to \latt F$.
+\end{definition}
+
+Using the pointer, we can in fact turn $\latt F$ into a $\psh(\mc C)$-indexed functor: Let $F$ be a diagram equipped with a pointer, with the corresponding natural transformation $\eta : \id \to \latt F$. For any $X\in\psh(X)$, define 
+\[ \latt F_X : \psh(\mc C)/X \to \psh(\mc C)/X \] 
+sending $f : Y \to X$ to the following pullback,
+\[ 
+\begin{tikzcd}
+  \latt F_XY \ar[d, "\latt F_Xf"'] \ar[dr, pullback] \ar[r] & \latt FY \ar[d, "\latt Ff"] \\ 
+  X \ar[r, "\eta"'] & \latt FX 
+\end{tikzcd}
+\]
+
+\begin{proposition}
+  The family $\latt F_-$ provides a well-defined $\psh(\mc C)$-indexed functor.
+\end{proposition}
+\begin{proof}
+  We need to verify the following diagram commutes up to natural isomorphism for any $f : Y \to X$,
+  \[
+  \begin{tikzcd}
+    \psh(\mc C)/X \ar[r, "f^*"] \ar[d, "\latt F_X"'] & \psh(\mc C)/Y \ar[d, "\latt F_Y"] \\ 
+    \psh(\mc C)/X \ar[r, "f^*"'] & \psh(\mc C)/Y
+  \end{tikzcd}
+  \]
+  Given any $g : Z \to X$, consider the following diagram,
+  \[\begin{tikzcd}
+    {\latt F_{Y}f^*Z} && {\latt Ff^*Z} \\
+    & {\latt F_XZ} && {\latt FZ} \\
+    {Y} && {\latt FY} \\
+    & X && {\latt FX}
+    \arrow[from=1-1, to=1-3]
+    \arrow[from=1-1, to=2-2]
+    \arrow["\latt F_Yf^*g"', from=1-1, to=3-1]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=4-2]
+    \arrow[from=1-3, to=2-4]
+    \arrow["{\latt Ff^*g}"{description, pos=0.3}, from=1-3, to=3-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-3, to=4-4]
+    \arrow[from=2-2, to=2-4]
+    \arrow["{\latt F_Xg}"{description, pos=0.3}, from=2-2, to=4-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=2-2, to=4-4]
+    \arrow["{\latt Fg}", from=2-4, to=4-4]
+    \arrow["\eta"{description, pos=0.3}, from=3-1, to=3-3]
+    \arrow["f"', from=3-1, to=4-2]
+    \arrow["\latt Ff"', from=3-3, to=4-4]
+    \arrow["\eta"', from=4-2, to=4-4]
+  \end{tikzcd}\]
+  By construction, the front and back squares are pullbacks. The right square is a pullback since $\latt F$ preserves limits. This implies the left square must also be a pullback by 2-out-of-3. Hence,
+  \[ f^*\latt F_Xg \cong \latt F_Yf^*g, \]
+  which implies $\latt F_-$ is a well-defined $\psh(\mc C)$-indexed functor.
+\end{proof}
+
+The above shows that we can view $\latt F$ as a modality in the internal logic of $\psh(\mc C)$. This way, we can connect the property of the diagram $F$ with the property of the modality $\latt F$.
+
+\begin{remark}
+  In general, the dual functor $\prev F$ does \emph{not} internalise, unless the corresponding map $\prev F \to \id$ is \emph{Cartesian}.
+\end{remark}
+
+\begin{proposition}
+  The internal modality $\latt F$ is left exact.
+\end{proposition}
+\begin{proof}
+  As an indexed functor, being left exact is equivalent to each $\latt F_X$ being left exact for all $X\in\psh(\mc C)$. This follows directly from construction.
+\end{proof}
+
+\begin{remark}
+  In particular, this shows the modality $\latt F$ is \emph{normal}, i.e. it satisfies necessitation, i.e. $\latt F 1 \cong 1$, and the (K) axiom,
+  \[ \fa{\varphi,\psi}{\Omega} \latt F(\varphi \to \psi) \to (\latt F\varphi \to \latt F\psi). \]
+  Furthermore, since we have $\id \nt \latt F$, it also satisfies the (C) axiom,
+  \[ \fa\varphi\Omega \varphi \to \latt F\varphi. \]
+\end{remark}
+
+\begin{remark}
+  However, $\latt F$ cannot preserve all internal limit, since this is equivalent to the existence of a $\psh(\mc C)$-indexed left adjoint. This holds iff $\prev F$ can be made into an indexed functor.
+\end{remark}
+
+\section{The L\"ob's axiom externally}
+
+Let us now fix a diagram $F$ on $\mc C$ equipped with a pointer $\sigma : F \to \yon$. We also use $\sigma$ to denote the induced natural transformation $\sigma : \prev F \to \id$.
+
+\begin{lemma}\label{KJoflatt}
+  For any $X\in\psh(\mc C)$ and $\varphi\in\sub(X)$, 
+  \[ X \models \latt F\varphi \eff \prev FX \models \sigma_X^*\varphi, \]
+  i.e. $\sigma_X : \prev FX \to X$ factors through $\varphi$.
+\end{lemma}
+\begin{proof}
+  By the Kripke-Joyal semantics, $X \models \latt F\varphi$ iff $\latt F_X\varphi \cong X$, i.e. we have a factorisation
+  \[
+  \begin{tikzcd}
+    & \latt F\varphi \ar[d, hook] \\ 
+    X \ar[ur, dashed] \ar[r, "\eta"'] & \latt F X
+  \end{tikzcd}
+  \]
+  By the adjunction $\prev F\dashv\latt F$, this is equivalent to $\sigma_X$ factors through $\varphi$.
+\end{proof}
+
+\begin{definition}
+  We say a diagram $F$ is \emph{inductive}, if for any $c\in\mc C$, there exists a finite number $n$ such that $\prev F^n\yon_c \cong \emp$.
+\end{definition}
+
+\begin{proposition}
+  For any inductive diagram $F$ with a pointer $\sigma : F \to \yon$, the internal modality $\latt F$ satisfies (L\"ob),
+  \[ \fa\varphi\Omega (\latt F\varphi \to \varphi) \to \varphi, \]
+\end{proposition}
+\begin{proof}
+  Suppose we have $c\in\mc C$ and $\varphi\in\Omega(c)$ that
+  \[ c \models \latt F\varphi \to \varphi. \]
+  This way, since $\latt F$ satisfies (C), by \Cref{KJoflatt} we have
+  \[ c \models \varphi \eff c \models \latt F\varphi \eff \prev F\yon_c \models \sigma_c^*\varphi. \]
+  Furthermore, since again $\prev F\yon_c \models \latt F\sigma_c^*\varphi \to \sigma_c^*\varphi$ by stability, it follows that 
+  \[ \prev F\yon_c \models \sigma_c^*\varphi \eff \prev F\yon_c \models \latt F\sigma_c^*\varphi \eff \prev F^2\yon_c \models \sigma_{\prev\yon_c}^*\sigma_c^*\varphi. \]
+  It follows that for any $n\in\N$, 
+  \[ c \models \varphi \eff \prev F^n\yon_c \models \sigma_{\prev F^{n-1}\yon_c}^* \cdots \sigma_c^*\varphi. \]
+  This way, if $F$ is inductive, then for some $n$ we have $\prev F^n\yon_c \cong \emp$, which implies $\prev F^n \yon_c \models \sigma_{\prev F^{n-1}\yon_c}^* \cdots \sigma_c^*\varphi$. Hence $c \models \varphi$. This shows (L\"ob) holds in $\psh(\mc C)$.
+\end{proof}
+
+\section{The L\"ob's axiom internally}
+
+For any category $\mc C$, we can in fact look at the \emph{algebraic theory} of $\mc C$-diagrams. Quasi-coherence for $\mc C$-diagrams holds in $\psh(\mc C)$, since the theory of flat diagrams of $\mc C$ is a subcanonical quotient of the theory of $\mc C$-diagrams:
+
+\begin{proposition}
+  For a $\mc C$-diagram
+\end{proposition}

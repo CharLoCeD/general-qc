@@ -1,4 +1,4 @@
-\documentclass[12pt]{amsbook}
+\documentclass[a4paper,11pt]{amsbook}
 
 \usepackage{etoolbox}
 \makeatletter
@@ -20,8 +20,9 @@
 \usepackage{quiver}
 \usepackage{appendix}
 \usepackage{mathtools}
+\usepackage{cleveref}
 
-
+\tikzcdset{pullback/.style = {"\lrcorner"{anchor = center, pos = 0.125}, draw = none}}
 
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{fact}[theorem]{Fact}
@@ -87,7 +88,7 @@
 \newcommand{\op}{^{\mathrm{op}}}
 \newcommand{\inv}{^{\mathrm{-1}}}
 \newcommand{\pf}[1]{\widehat{#1}}
-\newcommand{\qsi}[1]{\tilde{#1}}
+\newcommand{\qsi}[1]{\widetilde{#1}}
 \newcommand{\cob}{\vartriangleleft}
 \newcommand{\other}{\mathrm{otherwise}}
 \newcommand{\geo}[1]{\left|#1\right|}
@@ -185,18 +186,27 @@
 \newcommand{\ran}{\ms{ran}}
 \newcommand{\upp}{_{\ms U}}
 \newcommand{\dsg}[1]{\!\pair{#1}}
+\newcommand{\epro}[1]{\mb{Prof}(#1,#1)}
+
 
 \newcommand{\um}[1]{U_{#1}}
 \newcommand{\ut}[1]{\mbb U_{#1}}
-\newcommand{\prev}{\triangleleft}
-\newcommand{\latt}{\triangleright}
+\newcommand{\prev}[1]{\langle #1\rangle}
+\newcommand{\latt}[1]{[#1]}
 \newcommand{\wh}[1]{\widehat{#1}}
-\newcommand{\Diag}{\mb{Diag}}
+\newcommand{\Diag}{\mbb D\mb{iag}}
+\newcommand{\diag}{\mb{Diag}}
+\newcommand{\Flat}{\mbb F\mb{lat}}
+\newcommand{\fla}{\mb{Flat}}
+\newcommand{\radj}{\mb{RAdj}}
+\newcommand{\ladj}{\mb{LAdj}}
+\newcommand{\res}{\ms{res}}
+\newcommand{\rg}{\operatorname{\mc O}}
 
 \DeclareFontFamily{U}{min}{}
 \DeclareFontShape{U}{min}{m}{n}{ <-> udmj30 }{}
-\DeclareRobustCommand{\yon}{\text{\usefont{U}{min}{m}{n}\symbol{'207}}\!}
-\DeclareRobustCommand{\noy}{\text{\usefont{U}{min}{m}{n}\symbol{'347}}\!}
+\DeclareRobustCommand{\yon}{\!\text{\usefont{U}{min}{m}{n}\symbol{'207}}\!}
+\DeclareRobustCommand{\noy}{\!\text{\usefont{U}{min}{m}{n}\symbol{'347}}\!}
 
 \makeatletter
 \newcommand{\ct@}[2]{%
@@ -251,6 +261,7 @@
 
 \include{source/prelim}
 \include{source/qc}
+\include{source/modality}
 
 \end{document}
 
